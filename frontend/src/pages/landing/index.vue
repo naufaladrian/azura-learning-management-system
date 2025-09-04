@@ -131,9 +131,10 @@ const image =
         </p>
       </div>
 
-      <div class="flex items-center space-x-4">
+      <!-- Carousel -->
+      <div class="flex items-center space-x-4 max-w-xs lg:max-w-2xl">
         <!-- arrow left -->
-        <ChevronDownCircle class="size-8 rotate-90" />
+        <ChevronDownCircle class="size-12 lg:size-8 rotate-90" />
 
         <div class="flex items-center gap-x-4 overflow-auto">
           <template v-for="value in 2">
@@ -147,7 +148,7 @@ const image =
         </div>
 
         <!-- arrow right -->
-        <ChevronDownCircle class="size-8 -rotate-90" />
+        <ChevronDownCircle class="size-12 lg:size-8 -rotate-90" />
       </div>
     </section>
 
