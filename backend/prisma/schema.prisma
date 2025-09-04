@@ -19,14 +19,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Message{
-  id        String   @id @default(uuid())
-  content   String   @db.VarChar(255)
+model Message {
+  id      String @id @default(uuid())
+  content String @db.VarChar(255)
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique @db.VarChar(100)
-  password  String   @db.VarChar(100)
-  role      Role     @default(SISWA)
-} 
+  id        String  @id @default(uuid())
+  email     String  @unique @db.VarChar(100)
+  password  String  @db.VarChar(100)
+  role      Role    @default(SISWA)
+  full_name String? @db.VarChar(100)
+  position  String? @db.VarChar(100)
+  nidn      String? @db.VarChar(20)
+}

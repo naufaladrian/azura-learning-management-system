@@ -20,6 +20,9 @@ const getAllUsers = async (page = 1, limit = 10, role = null) => {
         id: true,
         email: true,
         role: true,
+        full_name: true,
+        position: true,
+        nidn: true,
       },
       skip,
       take: limit,
@@ -54,6 +57,9 @@ const getUserById = async (userId) => {
       id: true,
       email: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
   });
 
@@ -91,6 +97,20 @@ const updateUser = async (userId, request) => {
     }
   }
 
+  // Check if NIDN is being changed and if it already exists
+  if (user.nidn && user.nidn !== existingUser.nidn) {
+    const nidnExists = await prismaClient.user.findFirst({
+      where: {
+        nidn: user.nidn,
+        id: { not: userId },
+      },
+    });
+
+    if (nidnExists) {
+      throw new ResponseError(400, "NIDN already exists");
+    }
+  }
+
   return prismaClient.user.update({
     where: {
       id: userId,
@@ -100,6 +120,9 @@ const updateUser = async (userId, request) => {
       id: true,
       email: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
   });
 };
@@ -177,6 +200,9 @@ const getUsersByRole = async (role) => {
       id: true,
       email: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
     orderBy: {
       email: "asc",

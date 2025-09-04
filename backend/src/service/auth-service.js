@@ -23,6 +23,19 @@ const register = async (request) => {
     throw new ResponseError(400, "Email already exists");
   }
 
+  // Check if NIDN is provided and if it already exists
+  if (user.nidn) {
+    const countNidn = await prismaClient.user.count({
+      where: {
+        nidn: user.nidn,
+      },
+    });
+
+    if (countNidn >= 1) {
+      throw new ResponseError(400, "NIDN already exists");
+    }
+  }
+
   user.password = await bcrypt.hash(user.password, 10);
 
   return prismaClient.user.create({
@@ -31,6 +44,9 @@ const register = async (request) => {
       id: true,
       email: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
   });
 };
@@ -47,6 +63,9 @@ const login = async (request) => {
       email: true,
       password: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
   });
 
@@ -67,6 +86,9 @@ const login = async (request) => {
       userId: user.id,
       email: user.email,
       role: user.role,
+      full_name: user.full_name,
+      position: user.position,
+      nidn: user.nidn,
     },
     process.env.JWT_SECRET,
     { expiresIn: "24h" },
@@ -78,6 +100,9 @@ const login = async (request) => {
       id: user.id,
       email: user.email,
       role: user.role,
+      full_name: user.full_name,
+      position: user.position,
+      nidn: user.nidn,
     },
   };
 };
@@ -93,6 +118,9 @@ const get = async (userId) => {
       id: true,
       email: true,
       role: true,
+      full_name: true,
+      position: true,
+      nidn: true,
     },
   });
 
@@ -115,6 +143,9 @@ const verifyToken = async (token) => {
         id: true,
         email: true,
         role: true,
+        full_name: true,
+        position: true,
+        nidn: true,
       },
     });
 
