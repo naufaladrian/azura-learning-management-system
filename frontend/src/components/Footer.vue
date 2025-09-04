@@ -1,3 +1,8 @@
+<script setup>
+import { Facebook, Twitter, Youtube, Mail, Map, Phone } from "lucide-vue-next";
+import config from "@/lib/config";
+</script>
+
 <template>
   <footer
     class="bg-green-100/30 text-neutral-800 flex flex-col py-12 px-6 sm:px-12 md:px-24"
@@ -8,7 +13,9 @@
       <div
         class="max-w-md w-full space-y-8 mb-8 md:mb-0 text-center md:text-left"
       >
-        <h2 class="text-4xl font-bold text-foreground">FE Open Course</h2>
+        <h2 class="text-4xl font-bold text-foreground">
+          {{ config.appName }}
+        </h2>
 
         <!-- Social -->
         <div class="flex flex-col gap-y-4 items-center md:items-start">
@@ -81,7 +88,3 @@
     </div>
   </footer>
 </template>
-
-<script setup>
-import { Facebook, Twitter, Youtube, Mail, Map, Phone } from "lucide-vue-next";
-</script>
